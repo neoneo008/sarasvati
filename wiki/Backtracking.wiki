@@ -11,17 +11,17 @@ In graph based workflow, execution proceeds forward from node to node along dire
 ==Linear Process Definition==
 Here is a simple, linear workflow:
 
-[https://github.com/neoneo008/sarasvati/tree/master/wiki/images/backtrack-graph1.jpg]
+[[https://github.com/neoneo008/sarasvati/tree/master/wiki/images/backtrack-graph1.jpg]]
 
 In this case, there is only one progression that can be made. Using squares for node tokens and triangles for arc tokens, the resulting execution looks like:
 
-[https://github.com/neoneo008/sarasvati/tree/master/wiki/images/backtrack-process1.jpg]
+[[https://github.com/neoneo008/sarasvati/tree/master/wiki/images/backtrack-process1.jpg]]
 
 ==Linear Backtracking: Manual==
 
 What if we wish to let a user choose to send the workflow backwards, instead of forwards, say to fix a mistake made earlier. If we wanted to be able to go back, we'd have to set up arcs going backwards. Assuming, we want maximum flexibility, we'd end up with a process definition that looked like:
 
-[https://github.com/neoneo008/sarasvati/tree/master/wiki/images/backtrack-graph2.jpg]
+[[https://github.com/neoneo008/sarasvati/tree/master/wiki/images/backtrack-graph2.jpg]]
 
 Now we could go from A to B to C, back to B to C to D, back to B to C to D and done. The execution would look like:
 
@@ -37,33 +37,33 @@ What if instead, we could use the existing arcs? After all we know where we've b
 
 So, lets says we've gotten up to *C*. At this point, the process execution history looks like:
 
-[https://github.com/neoneo008/sarasvati/tree/master/wiki/images/backtrack-process3-1.jpg]
+[[https://github.com/neoneo008/sarasvati/tree/master/wiki/images/backtrack-process3-1.jpg]]
 
 Now we wish to backtrack to *B*. If we retrace our steps, the process history will now look like:
 
-[https://github.com/neoneo008/sarasvati/tree/master/wiki/images/backtrack-process3-2.jpg]
+[[https://github.com/neoneo008/sarasvati/tree/master/wiki/images/backtrack-process3-2.jpg]]
 
 Note that when we traverse arc *2* backward, it's marked in red. This is to mark that we've gone backwards along that arc. The node tokens on *B* and *C*, as well as the forward moving arc token on *2* are also marked, but in blue. This is to note that these actions have been backtracked. When node tokens are backtracked, they are given the opportunity to undo whatever work they did, send out notifications, or do whatever else is required.
 
 We can now move forward again, this time going up to *D*, where the process execution history looks like:
 
-[https://github.com/neoneo008/sarasvati/tree/master/wiki/images/backtrack-process3-3.jpg]
+[[https://github.com/neoneo008/sarasvati/tree/master/wiki/images/backtrack-process3-3.jpg]]
 
 If from here, we once again wish to return to *B*, the execution history will look like:
 
-[https://github.com/neoneo008/sarasvati/tree/master/wiki/images/backtrack-process3-4.jpg]
+[[https://github.com/neoneo008/sarasvati/tree/master/wiki/images/backtrack-process3-4.jpg]]
 
 Note that since we are somewhat literally retracing our steps, to get from *D* to *B* we created backwards tokens at arc *3*, node *C* and arc *2*. The corresponding forward tokens have been marked as backtracked. 
 
 From here we now finish, and go to the end.
 
-[https://github.com/neoneo008/sarasvati/tree/master/wiki/images/backtrack-process3-5.jpg]
+[[https://github.com/neoneo008/sarasvati/tree/master/wiki/images/backtrack-process3-5.jpg]]
 
 =Backtracking across a Split=
 ==Process Definition==
 Let us now examine a process definition which has splits and joins. 
 
-[https://github.com/neoneo008/sarasvati/tree/master/wiki/images/backtrack-graph3.jpg]
+[[https://github.com/neoneo008/sarasvati/tree/master/wiki/images/backtrack-graph3.jpg]]
 
 These complicate manual backtracking a great deal. 
 
@@ -74,31 +74,31 @@ If all tokens which were generated from the split aren't collected and sent back
 
 Here is an example of a graph which would be roughly equivalent to the previous graph, but allows manual backtracking.
 
-[https://github.com/neoneo008/sarasvati/tree/master/wiki/images/backtrack-graph4.jpg]
+[[https://github.com/neoneo008/sarasvati/tree/master/wiki/images/backtrack-graph4.jpg]]
 
 It has a great deal many more arcs, as well as a more complicated structure, to accommodate backtracking to the split. 
 
 ==Automated==
 To see how automated backtracking would work, let us first progress from *A* to *B* to where both *C* and *D* are open.
 
-[https://github.com/neoneo008/sarasvati/tree/master/wiki/images/backtrack-process4-s1.jpg]
+[[https://github.com/neoneo008/sarasvati/tree/master/wiki/images/backtrack-process4-s1.jpg]]
 
 We can now attempt to backtrack to *B*.
 
-[https://github.com/neoneo008/sarasvati/tree/master/wiki/images/backtrack-process4-s2.jpg]
+[[https://github.com/neoneo008/sarasvati/tree/master/wiki/images/backtrack-process4-s2.jpg]]
 
 The engine will follow all execution history which emanated from *B* and attempt to reverse it. So we can see that it flows backwards from *C* and *D* backwards to *B*.
 
 If we now attempt to backtrack one more step to *A*, the execution history will look like:
 
-[https://github.com/neoneo008/sarasvati/tree/master/wiki/images/backtrack-process4-s3.jpg]
+[[https://github.com/neoneo008/sarasvati/tree/master/wiki/images/backtrack-process4-s3.jpg]]
 
 Though this appears to be a simple linear backtrack, it's actually slightly complicated. The history starting from *A* includes the backtracking we just did. So the engine must traverse this to get to the current active tokens and backtrack them.
 
 ==Variation==
 If we were to backtrack directly from when *C* and *D* were open back to *A*, the execution history would look as follows:
 
-[https://github.com/neoneo008/sarasvati/tree/master/wiki/images/backtrack-process4-s4.jpg]
+[[https://github.com/neoneo008/sarasvati/tree/master/wiki/images/backtrack-process4-s4.jpg]]
 
 It looks almost the same, except that the second *B* is marked as a backwards execution, since this time, we went straight across it, instead of stopping there, and then continuing backwards.
 
@@ -106,7 +106,7 @@ It looks almost the same, except that the second *B* is marked as a backwards ex
 ==Process Definition==
 We'll use the same process definition as we used for demonstrating splits.
 
-[https://github.com/neoneo008/sarasvati/tree/master/wiki/images/backtrack-graph3.jpg]
+[[https://github.com/neoneo008/sarasvati/tree/master/wiki/images/backtrack-graph3.jpg]]
 
 ==Considerations==
 Going back from a join is both more and less problematic than a split. A join can act as a split and send tokens back all of its inputs. However, it is very difficult to go back to just one of the inputs. If only one of the join inputs is reactivated, then the join will never fire, since it won't have all the required inputs available.
@@ -114,11 +114,11 @@ Going back from a join is both more and less problematic than a split. A join ca
 ==Automated==
 To start off with, assume execution has proceeded to *E* and the execution history looks like:
 
-[https://github.com/neoneo008/sarasvati/tree/master/wiki/images/backtrack-process4-j1.jpg]
+[[https://github.com/neoneo008/sarasvati/tree/master/wiki/images/backtrack-process4-j1.jpg]]
 
 If we then want to go back to when *C* was open, the process will now look like:
 
-[https://github.com/neoneo008/sarasvati/tree/master/wiki/images/backtrack-process4-j2.jpg]
+[[https://github.com/neoneo008/sarasvati/tree/master/wiki/images/backtrack-process4-j2.jpg]]
 
 As expected, *C* is now open. To do so, we backtracked across arc *4*. However, *D* is not open but there is an open arc token on *5*. We only wanted *C* open, not *D*. However, when *C* completes, we want *E* to execute again. However, *E* will only execute if there are arc tokens waiting on arcs *4* and *5*. So, we backtrack arc *5*, but the arc token we create on *5* is left active. Now when *C* completes, *E* will execute as it will have arc tokens on all inputs.
 
@@ -126,11 +126,11 @@ The arc token on *5* is called a *u-turn* and it marked in yellow, since this is
 
 If we complete *C* the process will look like:
 
-[https://github.com/neoneo008/sarasvati/tree/master/wiki/images/backtrack-process4-j3.jpg]
+[[https://github.com/neoneo008/sarasvati/tree/master/wiki/images/backtrack-process4-j3.jpg]]
 
 If instead of completing *C* we backtracked to *D* as well, the process would now look like:
 
-[https://github.com/neoneo008/sarasvati/tree/master/wiki/images/backtrack-process4-j4.jpg]
+[[https://github.com/neoneo008/sarasvati/tree/master/wiki/images/backtrack-process4-j4.jpg]]
 
 The u-turn arc token is now marked as backtracked and a node token is now active on *D*.
 
